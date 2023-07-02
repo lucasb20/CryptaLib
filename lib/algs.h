@@ -5,3 +5,4 @@
 
 void encryptCaesar(const char *name, const int shift);
 int fix(int num);
+int toogle(int shift);

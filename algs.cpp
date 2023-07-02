@@ -17,10 +17,12 @@ void encryptCaesar(const char *name, const int shift){
     }
 
     char ch;
-    
+    int shift_otm = fix(shift);
     while((ch = getc(file_ptr)) != EOF){
-        printf("ch: %c[%d]\tis: %d\tnew_ch: %c[%d]\tnum: %d\n",ch,ch,isalpha(ch),ch+shift,ch+(shift % 26),shift % 26);
-        if(isalpha(ch))ch += (shift+26) % 26;
+        if(isalpha(ch)){
+            if(!(isalpha(ch+shift_otm)))shift_otm = toogle(shift_otm);
+            ch += shift_otm;
+        }
         fprintf(encry_ptr,"%c",ch);
     }
 
@@ -41,4 +43,10 @@ int fix(int num){
     if(isneg)num_fix = num_fix*(-1);
 
     return num_fix;
+}
+
+int toogle(int shift){
+    int res;
+    res = shift>0?shift-26:shift+26;
+    return res;
 }
