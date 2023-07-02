@@ -1,5 +1,7 @@
-# cifra_de_cesar
- Um algoritmo em C++ que realiza essa criptografia simples, a Cifra de César.
+# CryptaLib
+ Algoritmos de criptografia em C++.
+
+Há um algoritmo de Cifra de César, que realiza um deslocamento em todas as letras em um arquivo.
 
 Bastante você adicionar na pasta um arquivo de texto a ser criptografado e será criado um outro arquivo com a versão codificada.
 
