@@ -31,3 +31,6 @@
 *.out
 *.app
 hello
+
+# Depuration
+*.txt
