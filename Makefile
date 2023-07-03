@@ -1,7 +1,7 @@
 all: hello
 
 hello: main.o cifras.o rsa.o
-	g++ -o hello main.o cifras.o rsa.o
+	g++ -o hello main.o cifras.o rsa.o -lgmpxx -lgmp
 
 main.o: main.cpp
 	g++ -o main.o -c main.cpp

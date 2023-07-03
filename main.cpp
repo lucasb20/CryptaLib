@@ -16,7 +16,11 @@ int main(int argc, char **argv){
         free(aux);
     }
     else if(argc == 2 && (op == 2)){
-        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<PQ> " << "<E> " << "<first_alpha> "<< '\n';
+        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<PQ> " << "<E> " << "<first_alpha>"<< '\n';
+        exit(1);
+    }
+    else if(argc == 2 && (op == 3)){
+        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<P> " << "<Q> " << "<E> " <<"<first_alpha>"<< '\n';
         exit(1);
     }
 
@@ -41,6 +45,15 @@ int main(int argc, char **argv){
         if(argc == 5)rsa.first_alpha = atoi(*(argv+5));
         else rsa.first_alpha = 10;
         encryptRSA(filename,rsa.first_alpha,rsa.pq,rsa.e);
+        break;
+
+        case 3:
+        rsa.p = atoi(*(argv+3));
+        rsa.q = atoi(*(argv+4));
+        rsa.e = atoi(*(argv+5));
+        if(argc == 7)rsa.first_alpha = atoi(*(argv+6));
+        else rsa.first_alpha = 10;
+        decryptRSA(filename,rsa.p,rsa.q,rsa.e,rsa.first_alpha);
         break;
 
         default:

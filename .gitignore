@@ -34,3 +34,4 @@ hello
 
 # Debug
 *.txt
+.vscode

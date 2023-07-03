@@ -1,5 +1,10 @@
 #include "lib/cifras.h"
 
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+#include <cctype>
+
 void encryptCaesar(const char *name, const int shift){
     FILE *file_ptr;
     if(!(file_ptr = fopen(name,"r"))){
