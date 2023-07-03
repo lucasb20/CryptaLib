@@ -27,14 +27,17 @@ void encryptRSA(const char *name, const int first_alp, const unsigned pq, const 
     char ch;
     int num;
 
+    mpz_class aux;
+
     while(fin.get(ch)){
         num = ch;
         if(isalpha(ch)){
             num = islower(ch)?(ch-97+first_alp):(ch-65+first_alp);
             #ifdef DEBUG
-            printf("ch: %c[%s]\t num: %d\n",ch,isalpha(ch)?"yes":"not",num);
+            printf("ch: %c[%s][%d]\t num: %d\n",ch,isalpha(ch)?"yes":"not",ch,num);
             #endif
-            num = findmod(num,e,pq);
+            aux = findmod(num,e,pq);
+            num = aux.get_ui();
             if(num < 10)fout<<0;
             fout << num;
         }
@@ -47,13 +50,12 @@ void encryptRSA(const char *name, const int first_alp, const unsigned pq, const 
     fout.close();
 }
 
-unsigned findmod(const int a, const int e, const int pq){
-    unsigned res;
-    res = pow(a,e);
-    res %= pq;
-    #ifdef DEBUG
-    printf("%d^%d == %d (mod %d)\n",a,e,res,pq);
-    #endif
+mpz_class findmod(const int a, const int e, const int pq){
+    mpz_class res;
+    mpz_class a_mpz = a;
+    mpz_class e_mpz = e;
+    mpz_class pq_mpz = pq;
+    mpz_powm(res.get_mpz_t(), a_mpz.get_mpz_t(), e_mpz.get_mpz_t(), pq_mpz.get_mpz_t());
     return res;
 }
 
@@ -76,6 +78,7 @@ void decryptRSA(const char *name, const unsigned p, const unsigned q, const unsi
     char ch, num[] = {'0','0'};
 
     mpz_class decod_num = search_mod(p,q,e);
+    mpz_class aux;
     while(fin.get(ch)){
         if(ch == '\\'){
             fin.get(ch);
@@ -91,9 +94,10 @@ void decryptRSA(const char *name, const unsigned p, const unsigned q, const unsi
         num[1] = ch;
         ch = atoi(num);
         printf("num = {%c, %c}\t ch = %d\n",num[0],num[1],ch);
-        ch = search_val(ch,decod_num,p*q);
+        aux = search_val(ch,decod_num,p*q);
+        ch = aux.get_ui();
+        ch+=97-alpha;
         printf("ch: %c[%d]\n",ch,ch);
-        ch+=65;
 
         fout.put(ch);
     }
@@ -116,16 +120,10 @@ mpz_class search_mod(const unsigned p,const unsigned q,const unsigned e){
     }
 }
 
-unsigned search_val(const unsigned a, const unsigned decod_num,const unsigned pq){
-    unsigned res;
-    res = pow_int(a,decod_num);
-    printf("res: %d\n",res);
-    res = res % pq;
-    return res;
-}
-
-unsigned pow_int(unsigned a, unsigned exp){
-    unsigned res = 1;
-    for(int i=0; i<exp; i++)res*=a;
+mpz_class search_val(const unsigned a, mpz_class decod_num,const unsigned pq){
+    mpz_class res;
+    mpz_class a_mpz = a;
+    mpz_class pq_mpz = pq;
+    mpz_powm(res.get_mpz_t(), a_mpz.get_mpz_t(), decod_num.get_mpz_t(), pq_mpz.get_mpz_t());
     return res;
 }
