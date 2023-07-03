@@ -93,11 +93,18 @@ void decryptRSA(const char *name, const unsigned p, const unsigned q, const unsi
         fin.get(ch);
         num[1] = ch;
         ch = atoi(num);
+        
+        #ifdef DEBUG
         printf("num = {%c, %c}\t ch = %d\n",num[0],num[1],ch);
+        #endif
+        
         aux = search_val(ch,decod_num,p*q);
         ch = aux.get_ui();
         ch+=97-alpha;
-        printf("ch: %c[%d]\n",ch,ch);
+
+        #ifdef DEBUG
+        printf("ch: %c[%d]\n",ch,ch); 
+        #endif
 
         fout.put(ch);
     }
@@ -112,7 +119,7 @@ mpz_class search_mod(const unsigned p,const unsigned q,const unsigned e){
     mpz_class e_mpz = e;
     mpz_class aux;
     if (mpz_invert(aux.get_mpz_t(), e_mpz.get_mpz_t(), num_mod.get_mpz_t()) == 0){
-        std::cout << "O inverso de " << e << " modulo " << num_mod << " nao existe." << '\n';
+        std::cout << "O inverso de " << e << " modulo " << num_mod << " não existe." << '\n';
         return 0;
     }
     else {
