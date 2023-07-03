@@ -23,7 +23,9 @@ void encryptRSA(const char *name, const int first_alp, const unsigned pq, const 
         num = ch;
         if(isalpha(ch)){
             num = islower(ch)?(ch-97+first_alp):(ch-65+first_alp);
-            //printf("ch: %c[%s]\t num: %d\n",ch,isalpha(ch)?"yes":"not",num);
+            #ifdef DEBUG
+            printf("ch: %c[%s]\t num: %d\n",ch,isalpha(ch)?"yes":"not",num);
+            #endif
             num = findmod(num,e,pq);
             if(num < 10)fout<<0;
             fout << num;
@@ -41,7 +43,9 @@ unsigned findmod(const int a, const int e, const int pq){
     unsigned res;
     res = pow(a,e);
     res %= pq;
-    //printf("%d^%d == %d (mod %d)\n",a,e,res,pq);
+    #ifdef DEBUG
+    printf("%d^%d == %d (mod %d)\n",a,e,res,pq);
+    #endif
     return res;
 }
 

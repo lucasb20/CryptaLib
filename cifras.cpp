@@ -21,7 +21,9 @@ void encryptCaesar(const char *name, const int shift){
     while((ch = getc(file_ptr)) != EOF){
         if(isalpha(ch)){
             if(check_next(ch,shift_otm))shift_otm = toogle(shift_otm);
-            //printf("ch: %c[%d]\t%c[%d]\t shift:[%d]\n",ch,ch,ch+shift_otm,ch+shift_otm,shift_otm);
+            #ifdef DEBUG
+            printf("ch: %c[%d]\t%c[%d]\t shift:[%d]\n",ch,ch,ch+shift_otm,ch+shift_otm,shift_otm);
+            #endif
             ch += shift_otm;
         }
         fprintf(encry_ptr,"%c",ch);
@@ -71,7 +73,9 @@ void encryptVigenere(const char*name,const char*key){
         shift = charToShift(shift);
 
         if(isalpha(ch)){
-            //printf("ch: %c[%d]\t%c[%d]\t shift:[%d]\n",ch,ch,ch+shift_otm,ch+shift_otm,shift_otm);
+            #ifdef DEBUG
+            printf("ch: %c[%d]\t%c[%d]\t shift:[%d]\n",ch,ch,ch+shift_otm,ch+shift_otm,shift_otm);
+            #endif
             if(check_next(ch,shift))shift = toogle(shift);
             ch += shift;
             pos++;
