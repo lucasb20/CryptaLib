@@ -1,6 +1,6 @@
 #include "lib/asym.h"
 
-void encryptRSA(const char *name, const int first_alp, const int pq, const int e){
+void encryptRSA(const char *name, const int first_alp, const unsigned pq, const unsigned e){
     std::ifstream fin(name,std::ios::in);
     if(!(fin.is_open())){
         std::cout << "Erro ao ler o arquivo.\n";
@@ -23,19 +23,26 @@ void encryptRSA(const char *name, const int first_alp, const int pq, const int e
         num = ch;
         if(isalpha(ch)){
             num = islower(ch)?(ch-97+first_alp):(ch-65+first_alp);
+            //printf("ch: %c[%s]\t num: %d\n",ch,isalpha(ch)?"yes":"not",num);
+            num = findmod(num,e,pq);
+            if(num < 10)fout<<0;
+            fout << num;
         }
-
-        fout << num << ' ';
-
-
+        else{
+            fout << "\\" << num << "\\";
+        }
     }
 
     fin.close();
     fout.close();
 }
 
-int mod_(){
-
+unsigned findmod(const int a, const int e, const int pq){
+    unsigned res;
+    res = pow(a,e);
+    res %= pq;
+    //printf("%d^%d == %d (mod %d)\n",a,e,res,pq);
+    return res;
 }
 
 void decryptRSA(){

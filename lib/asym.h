@@ -3,5 +3,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cctype>
+#include <cmath>
 
-void encryptRSA(const char *name, const int first_alp, const int pq, const int e);
+void encryptRSA(const char *name, const int first_alp, const unsigned pq, const unsigned e);
+unsigned findmod(const int,const int,const int);

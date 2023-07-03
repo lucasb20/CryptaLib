@@ -24,7 +24,7 @@ int main(int argc, char **argv){
 
         case 2:
         chave.shift = atoi(*(argv+2));
-        encryptRSA(filename,10,31,11);
+        encryptRSA(filename,10,33,7);
         break;
 
         default:
