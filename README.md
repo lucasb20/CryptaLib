@@ -1,11 +1,13 @@
 # CryptaLib
  Algoritmos de criptografia em C++.
 
-Há um algoritmo de Cifra de César, que realiza um deslocamento em todas as letras em um arquivo.
+Vários métodos de criptografia diferentes. Atualmente os métodos são:
 
-Bastante você adicionar na pasta um arquivo de texto a ser criptografado e será criado um outro arquivo com a versão codificada.
+Algoritmo de Cifra de César: Realiza um deslocamento em todas as letras em um arquivo. Bastante você adicionar na pasta um arquivo de texto a ser criptografado e será criado um outro arquivo com a versão codificada.
 
-Também há a Cifra de Vigenere, que é uma versão mais interessante da Cifra de César, que em vez de um deslocamento com número inteiro fixo, é um número inteiro variável de acordo com a posição.
+Algoritmo de Cifra de Vigenere: É uma versão mais interessante da Cifra de César, que em vez de um deslocamento com número inteiro fixo, é um número inteiro variável de acordo com a posição.
+
+Algoritmo de RSA: Criptografia assimétrica conhecida por utilizar de vários teoremas de aritmética modular para converter caracteres em números.
 
 Informações úteis:
 

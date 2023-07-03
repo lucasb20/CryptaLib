@@ -1,4 +1,4 @@
-#include "lib/algs.h"
+#include "lib/cifras.h"
 
 void encryptCaesar(const char *name, const int shift){
     FILE *file_ptr;
@@ -71,11 +71,12 @@ void encryptVigenere(const char*name,const char*key){
         shift = charToShift(shift);
 
         if(isalpha(ch)){
+            //printf("ch: %c[%d]\t%c[%d]\t shift:[%d]\n",ch,ch,ch+shift_otm,ch+shift_otm,shift_otm);
             if(check_next(ch,shift))shift = toogle(shift);
             ch += shift;
+            pos++;
         }
         fprintf(encry_ptr,"%c",ch);
-        pos++;
     }
 
     free(encry_name);

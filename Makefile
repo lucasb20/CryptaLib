@@ -1,13 +1,16 @@
 all: hello
 
-hello: main.o algs.o
-	g++ -o hello main.o algs.o
+hello: main.o cifras.o rsa.o
+	g++ -o hello main.o cifras.o rsa.o
 
 main.o: main.cpp
 	g++ -o main.o -c main.cpp
 
-algs.o: algs.cpp
-	g++ -o algs.o -c algs.cpp
+cifras.o: cifras.cpp
+	g++ -o cifras.o -c cifras.cpp
+
+rsa.o: rsa.cpp
+	g++ -o rsa.o -c rsa.cpp
 
 clean:
 	rm -f *.o hello
