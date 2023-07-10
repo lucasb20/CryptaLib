@@ -76,17 +76,23 @@ void decryptRSA(const char *name, const unsigned p, const unsigned q, const unsi
     }
 
     char ch, num[] = {'0','0'};
+    bool neg_aux;
 
     mpz_class decod_num = search_mod(p,q,e);
     mpz_class aux;
     while(fin.get(ch)){
         if(ch == '\\'){
+            neg_aux = false;
             fin.get(ch);
+            if(ch == '-'){
+                neg_aux = true;
+                fin.get(ch);
+            }
             num[0] = ch;
             fin.get(ch);
             num[1] = ch;
             fin.get(ch);
-            fout.put(atoi(num));
+            fout.put(neg_aux?-atoi(num):atoi(num));
             continue;
         }
         num[0] = ch;

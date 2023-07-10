@@ -1,5 +1,6 @@
 #include "lib/cifras.h"
 #include "lib/asym.h"
+#include "lib/analise.h"
 #include "iostream"
 
 int main(int argc, char **argv){
@@ -22,6 +23,10 @@ int main(int argc, char **argv){
     }
     else if(argc == 2 && (op == 3)){
         std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<P> " << "<Q> " << "<E>" << '\n';
+        exit(1);
+    }
+    else if(argc == 2 && (op == 4)){
+        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << '\n';
         exit(1);
     }
 
@@ -53,6 +58,10 @@ int main(int argc, char **argv){
         rsa.e = atoi(*(argv+5));
         rsa.first_alpha = 10;
         decryptRSA(filename,rsa.p,rsa.q,rsa.e,rsa.first_alpha);
+        break;
+
+        case 4:
+        freqAnalysis(filename);
         break;
 
         default:
