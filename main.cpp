@@ -1,40 +1,40 @@
 #include "lib/cifras.h"
 #include "lib/asym.h"
 #include "lib/analise.h"
-#include "iostream"
 
 int main(int argc, char **argv){
     if(argc < 2){
-        std::cout << "Formato: " << *argv << " <op> " << "<possíveis parâmetros> " << '\n';
+        std::cout << "Formato: " << *argv << " <op> " << "<possíveis parâmetros> " << std::endl;
         exit(1);
     }
     char op = atoi(*(argv+1));
 
-    if(argc == 2 && (op == 0 || op == 1)){
-        char aux[9];
-        sprintf(aux,"%s",op?"<key>":"<shift>");
-        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << aux << '\n';
-        exit(1);
-        free(aux);
-    }
-    else if(argc == 2 && (op == 2)){
-        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<PQ> " << "<E>" << '\n';
-        exit(1);
-    }
-    else if(argc == 2 && (op == 3)){
-        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<P> " << "<Q> " << "<E>" << '\n';
-        exit(1);
-    }
-    else if(argc == 2 && (op == 4)){
-        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << '\n';
-        exit(1);
-    }
-    else if(argc == 2 && (op == 5)){
-        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << " <letra_inicial> " << " <letra_substituta> " << '\n';
+    if(argc == 2){
+        switch(op){
+            case 0 ... 1:
+            std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << " <key or shift> " << std::endl;
+            break;
+            case 2:
+            std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<PQ> " << "<E>" << std::endl;
+            break;
+            case 3:
+            std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << "<P> " << "<Q> " << "<E>" << std::endl;
+            break;
+            case 4:
+            std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << std::endl;
+            break;
+            case 5:
+            std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << " <letra_inicial> " << " <letra_substituta> " << std::endl;
+            break;
+            case 6:
+            std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << " <arquivo_trocas.txt> " << std::endl;
+            break;
+        }
         exit(1);
     }
 
     char *filename = *(argv+2);
+    std::string key_file;
     key chave;
     param_ rsa;
     char a,b;
@@ -75,6 +75,9 @@ int main(int argc, char **argv){
         change_letter(filename,a,b);
         break;
 
+        case 6:
+        key_file = *(argv+3);
+        change_letter(filename,key_file);
         default:
         std::cout << "Operação inválida.\n";
         break;

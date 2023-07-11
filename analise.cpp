@@ -170,3 +170,72 @@ void _swap(char &a, char &b){
     a = b;
     b = temp;
 }
+
+void change_letter(const char *name, std::string keys){
+    std::ifstream fin(name,std::ios::in);
+    if(!(fin.is_open())){
+        std::cout << "Erro ao ler o arquivo.\n";
+        exit(1);
+    }
+
+    char *outname = (char*) malloc(6+strlen(name));
+
+    sprintf(outname,"modif_%s",name);
+
+    std::ofstream fout(outname,std::ios::trunc);
+    
+    free(outname);
+
+    if(!(fout.is_open())){
+        std::cout << "Erro ao criar o arquivo.\n";
+        exit(1);
+    }
+
+    std::ifstream fkeys(keys,std::ios::in);
+    
+    if(!(fkeys.is_open())){
+        std::cout << "Erro ao criar o arquivo.\n";
+        exit(1);
+    }
+
+    char ch;
+    std::vector<std::string> to_change;
+    std::string aux;
+
+    while(fkeys.get(ch)){
+        if(!(isalpha(ch)))continue;
+        if(aux.size()<2){
+            aux.push_back(ch);
+        }
+        else{
+            to_change.push_back(aux);
+            aux.clear();
+        }
+    }
+
+    size_t pos_aux;
+
+    while(fin.get(ch)){
+        if(present_(ch,to_change,pos_aux)){
+            fout << to_change[pos_aux][1];
+        }
+        else{
+            fout << ch;
+        }
+    }
+
+    fin.close();
+    fout.close();
+    fkeys.close();
+}
+
+bool present_(char c,std::vector<std::string>obj,size_t &ref){
+    for(int i = 0; i < obj.size(); i++){
+        if(obj[i][0] == c){
+            ref = i;
+            return true;
+        }
+    }
+    ref = -1;
+    return false;
+}
