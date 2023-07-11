@@ -78,6 +78,8 @@ int main(int argc, char **argv){
         case 6:
         key_file = *(argv+3);
         change_letter(filename,key_file);
+        break;
+        
         default:
         std::cout << "Operação inválida.\n";
         break;

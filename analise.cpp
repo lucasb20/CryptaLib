@@ -203,11 +203,15 @@ void change_letter(const char *name, std::string keys){
     std::string aux;
 
     while(fkeys.get(ch)){
+        #ifdef DEBUG
+        printf("Checando %c[%d] :: aux.size() -> [%lu]\n",ch,ch,aux.size());
+        #endif
         if(!(isalpha(ch)))continue;
-        if(aux.size()<2){
-            aux.push_back(ch);
-        }
-        else{
+        aux.push_back(ch);
+        #ifdef DEBUG
+        std::cout << "aux -> " << aux << std::endl;
+        #endif
+        if(aux.size()==2){
             to_change.push_back(aux);
             aux.clear();
         }
