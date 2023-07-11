@@ -3,40 +3,44 @@
 #include <cctype>
 #include <vector>
 #include <cstring>
-#include <iostream>
+
+//define DEBUG
 
 class ocorr{
-    private:
-    size_t qtd;
-    std::vector<std::vector<char>> array;
     public:
+    size_t qtd;
+    std::vector<char> array_char;
+    std::vector<size_t> array_size;
     ocorr(size_t num){
         this->qtd = num;
     }
     void criar_carac(char c){
-        std::vector<char> aux(2);
-        aux.push_back(c);
-        aux.push_back(1);
-        this->array.push_back(aux);
+        this->array_char.push_back(c);
+        this->array_size.push_back(1);
         this->qtd++;
     }
     bool present_(char c){
         for(int i = 0; i < qtd; i++){
-            if(this->array[i][0] == c){
+            if(this->array_char[i] == c){
                 return true;
             }
         }
         return false;
     }
-    size_t getQtd(){
-        return this->qtd;
-    }
     void do_ocorr(char c){
         for(int i = 0; i < this->qtd; i++){
-            if(this->array[i][0]==c){
-                this->array[i][1]++;
+            if(this->array_char[i]==c){
+                this->array_size[i]++;
+                #ifdef DEBUG
+                printf("Ocorrência: %c[%ld]\n",array_char[i],array_size[i]);
+                #endif
+                return;
             }
         }
+    }
+    void show_pos(char *ch, size_t *n,int i){
+        *ch = this->array_char[i];
+        *n = this->array_size[i];
     }
 };
 
@@ -64,23 +68,57 @@ void freqAnalysis(const char *name){
 
     char ch;
 
+    size_t num;
+
     while(fin.get(ch)){
+        #ifdef DEBUG
+        printf("Chegando %c. (%s)\n",ch,dif_.present_(ch)?"Já pertence.":"Não pertence.");
+        #endif
         if(!(dif_.present_(ch))){
             dif_.criar_carac(ch);
         }
         else{
-
+            dif_.do_ocorr(ch);
         }
     }
 
-    if(!(dif_.getQtd())){
+    if(!(dif_.qtd)){
         fout << "Arquivo vazio.\n";
         return;
     }
     else{
-        fout << "Há " << dif_.getQtd() << " caracteres diferentes.\n"; 
-        
+        bubbleSort(dif_.array_size,dif_.array_char);
+        fout << "Há " << dif_.qtd << " caracteres diferentes.\n"; 
+        for(int i = dif_.qtd - 1; i >= 0; i--){
+            dif_.show_pos(&ch,&num,i);
+            fout << ch << '[' << (int)ch << ']' << " -> " << num << '\n';
+        }
     }
 
     fin.close();
+}
+
+void bubbleSort(std::vector<size_t>&v,std::vector<char>&_char){
+    size_t n = v.size();
+
+    for (size_t i = 0; i < n - 1; i++) {
+        for (size_t j = 0; j < n - i - 1; j++) {
+            if (v[j] > v[j + 1]) {
+                _swap(v[j], v[j + 1]);
+                _swap(_char[j],_char[j+1]);
+            }
+        }
+    }
+}
+
+void _swap(size_t &a, size_t &b){
+    size_t temp = a;
+    a = b;
+    b = temp;
+}
+
+void _swap(char &a, char &b){
+    char temp = a;
+    a = b;
+    b = temp;
 }
