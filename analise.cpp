@@ -42,6 +42,19 @@ class ocorr{
         *ch = this->array_char[i];
         *n = this->array_size[i];
     }
+    double _percent(char c){
+        size_t _c=0,total=0;
+        double percent=0;
+        for(int i = 0; i < this->array_size.size(); i++){
+            if(array_char[i] == 10 or array_char[i] == 32)continue;
+            total += this->array_size[i];
+            if(array_char[i]==c){
+                _c += this->array_size[i];
+            }
+        }
+        if(total > 0)percent = ((double)_c)/total;
+        return percent;
+    }
 };
 
 void freqAnalysis(const char *name){
@@ -91,11 +104,46 @@ void freqAnalysis(const char *name){
         fout << "Há " << dif_.qtd << " caracteres diferentes.\n"; 
         for(int i = dif_.qtd - 1; i >= 0; i--){
             dif_.show_pos(&ch,&num,i);
-            fout << ch << '[' << (int)ch << ']' << " -> " << num << '\n';
+            fout << ch << '[' << (int)ch << ']' << " -> " << num << " -> " << (dif_._percent(ch))*100 << '%' << '\n';
+        }
+    }
+
+    fout.close();
+    fin.close();
+}
+
+void change_letter(const char *name, const char a, const char b){
+    std::ifstream fin(name,std::ios::in);
+    if(!(fin.is_open())){
+        std::cout << "Erro ao ler o arquivo.\n";
+        exit(1);
+    }
+
+    char *outname = (char*) malloc(6+strlen(name));
+
+    sprintf(outname,"modif_%s",name);
+
+    std::ofstream fout(outname,std::ios::trunc);
+
+    free(outname);
+    
+    if(!(fout.is_open())){
+        std::cout << "Erro ao criar o arquivo.\n";
+        exit(1);
+    }
+
+    char ch;
+    while(fin.get(ch)){
+        if(ch == a){
+            fout.put(b);
+        }
+        else{
+            fout.put(ch);
         }
     }
 
     fin.close();
+    fout.close();
 }
 
 void bubbleSort(std::vector<size_t>&v,std::vector<char>&_char){

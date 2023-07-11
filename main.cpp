@@ -29,10 +29,15 @@ int main(int argc, char **argv){
         std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << '\n';
         exit(1);
     }
+    else if(argc == 2 && (op == 5)){
+        std::cout << "Formato: " << *argv << " " << *(argv+1) << " <arquivo.txt> " << " <letra_inicial> " << " <letra_substituta> " << '\n';
+        exit(1);
+    }
 
     char *filename = *(argv+2);
     key chave;
     param_ rsa;
+    char a,b;
 
     switch(op){
         case 0:
@@ -62,6 +67,12 @@ int main(int argc, char **argv){
 
         case 4:
         freqAnalysis(filename);
+        break;
+
+        case 5:
+        a = argv[3][0];
+        b = argv[4][0];
+        change_letter(filename,a,b);
         break;
 
         default:
