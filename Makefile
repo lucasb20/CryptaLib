@@ -1,19 +1,15 @@
-all: hello
+CXX = g++
+CXXFLAGS = -lgmpxx -lgmp
+OBJS = main.o cifras.o rsa.o analise.o
+EXE = hello
 
-hello: main.o cifras.o rsa.o analise.o
-	g++ -o hello main.o cifras.o rsa.o analise.o -lgmpxx -lgmp
+all: $(EXE)
 
-main.o: main.cpp
-	g++ -o main.o -c main.cpp
+$(EXE): $(OBJS)
+	$(CXX) -o $@ $^ $(CXXFLAGS)
 
-cifras.o: cifras.cpp
-	g++ -o cifras.o -c cifras.cpp
-
-rsa.o: rsa.cpp
-	g++ -o rsa.o -c rsa.cpp
-
-analise.o: analise.cpp
-	g++ -o analise.o -c analise.cpp
+%.o: %.cpp
+	$(CXX) -c $< -o $@
 
 clean:
-	rm -f *.o hello
+	rm -f *.o $(EXE)
